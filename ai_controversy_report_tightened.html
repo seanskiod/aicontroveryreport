@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Response Analysis: American Eagle Campaign Controversy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: linear-gradient(90deg, #0a0e1a, #1a1f35);
+            padding: 30px 40px;
+            border-bottom: 2px solid #00d4ff;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            color: #ffffff;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #00d4ff;
+            border-left: 4px solid #00d4ff;
+            padding-left: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.02);
+            min-width: 1200px;
+        }
+
+        th {
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            color: #0a0e1a;
+            font-weight: 600;
+            padding: 18px 15px;
+            text-align: left;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #00d4ff;
+        }
+
+        th:first-child {
+            width: 25%;
+            background: linear-gradient(90deg, #00d4ff, #0077aa);
+        }
+
+        th:not(:first-child) {
+            width: 12.5%;
+        }
+
+        td {
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            vertical-align: top;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .question-cell {
+            background: rgba(0,212,255,0.1);
+            font-weight: 600;
+            color: #00d4ff;
+            font-size: 0.9rem;
+            border-right: 2px solid rgba(0,212,255,0.3);
+        }
+
+        .response-text {
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+
+        .summary-box {
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+
+        .alert-box {
+            background: rgba(255,107,107,0.1);
+            border-radius: 8px;
+            padding: 25px;
+            border: 2px solid #ff6b6b;
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .vulnerability-alert h3 {
+            color: #ff6b6b;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .alert-high {
+            background: linear-gradient(45deg, #ff6b6b, #ff4757);
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .critical-llm h3 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .critical-llm p {
+            color: #ffffff;
+            opacity: 0.95;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .summary-box h3 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .summary-box p {
+            color: #ffffff;
+            opacity: 0.95;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .score-highlight {
+            background: rgba(0,212,255,0.2);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            color: #00d4ff;
+            font-size: 0.8rem;
+        }
+
+        .score-2 { border-left: 4px solid #ff6b6b; }
+        .score-3 { border-left: 4px solid #ffd93d; }
+        .score-4 { border-left: 4px solid #4ecdc4; }
+
+        .conclusions {
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .conclusions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .conclusion-item {
+            margin-bottom: 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 6px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .conclusion-item h3 {
+            color: #00d4ff;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .conclusion-item p {
+            color: #ffffff;
+            opacity: 0.95;
+            font-size: 0.95rem;
+        }
+
+        .brandrank-about {
+            background: rgba(0,212,255,0.1);
+            border-radius: 8px;
+            padding: 30px;
+            border: 1px solid rgba(0,212,255,0.3);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .brandrank-about h3 {
+            color: #00d4ff;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .brandrank-about p {
+            color: #ffffff;
+            opacity: 0.95;
+            font-size: 1rem;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hover-effect:hover {
+            background: rgba(0,212,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            table {
+                font-size: 0.7rem;
+                min-width: 800px;
+            }
+            
+            th, td {
+                padding: 8px 6px;
+            }
+
+            .conclusions-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .conclusion-item {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <div class="header">
+            <h1>Answer Engines on Sydney Sweeney Controversy</h1>
+            <p>American Eagle Campaign Analysis: Powered by BrandRank (July 31, 2025)</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <div class="summary-box">
+                    <h3>Answer Engine Response Summary</h3>
+                    <p>All AI language models demonstrate <span class="highlight">unanimous recognition</span> that the American Eagle campaign is problematic, with responses ranging from diplomatic analysis to explicit moral condemnation. <span class="highlight">Claude takes the strongest critical stance</span>, directly labeling the campaign as promoting "white supremacist beauty ideals," while <span class="highlight">ChatGPT maintains analytical balance</span> and <span class="highlight">Perplexity provides detailed historical context</span>. <span class="highlight">Grok offers unique business realism</span>, noting how the stock surge may actually embolden similar edgy campaigns despite inclusivity pressures. Every model emphasizes the historical connection to eugenic ideology and racialized beauty standards, suggesting robust training data on these sensitive topics. The responses reveal <span class="highlight">different AI philosophies on corporate accountability</span> - some prioritize balanced reporting while others take clear ethical positions, but all acknowledge both the campaign's social harm and the role of homogeneous decision-making in creating these controversies.</p>
+                </div>
+
+                <div class="alert-box">
+                    <div class="vulnerability-alert">
+                        <h3>Overall Brand Vulnerability Level: <span class="alert-high">HIGH ALERT</span></h3>
+                    </div>
+                    <div class="critical-llm">
+                        <h3>Most Critical LLM: <span class="highlight">Anthropic Claude</span></h3>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>ChatGPT</th>
+                                <th>Google Gemini</th>
+                                <th>Claude</th>
+                                <th>Meta/Llama</th>
+                                <th>Perplexity</th>
+                                <th>X/Grok</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover-effect">
+                                <td class="question-cell">Q1: What implicit messages do you detect in "Sydney Sweeney has great jeans/genes," and why might audiences interpret it as promoting eugenic ideals?</td>
+                                <td class="response-text">Links Sweeney's Eurocentric features to genetic inheritance—eugenic nod.</td>
+                                <td class="response-text">Blonde/blue-eyed traits as desirable "genes"—promotes eugenic ideals via racialized beauty.</td>
+                                <td class="response-text">Implies certain traits are "great genes"—echoes eugenic ideology, white supremacist beauty ideals.</td>
+                                <td class="response-text">Links appearance to genetics—echoes racial superiority, eugenics-era ideologies.</td>
+                                <td class="response-text">Product pun with biological language—associates value with inherited eugenic traits.</td>
+                                <td class="response-text">Links attractiveness to genetic superiority via blonde, blue-eyed features—evokes white beauty standards.</td>
+                            </tr>
+                            <tr class="hover-effect">
+                                <td class="question-cell">Q2: What are the main defense arguments for this campaign versus the criticisms?</td>
+                                <td class="response-text">Defenders: clever wordplay, harmless fun. Critics: racial insensitivity, historical echoes.</td>
+                                <td class="response-text">Defense: cheeky marketing, overreaction. Emphasizes playful pun, downplays implications.</td>
+                                <td class="response-text">Defenders: harmless wordplay, oversensitive critics. Critics: perpetuates exclusionary standards.</td>
+                                <td class="response-text">Defense: cheeky marketing, overreaction. Defenders downplay, critics decry systemic harm.</td>
+                                <td class="response-text">Defenders: playful marketing, overreaction. Critics: invokes racist history, narrow beauty standards.</td>
+                                <td class="response-text">Defenders: playful pun, dismiss critics. Critics focus on historical connotations.</td>
+                            </tr>
+                            <tr class="hover-effect">
+                                <td class="question-cell">Q3: How does this controversy reflect broader cultural tensions about beauty standards and racialized marketing?</td>
+                                <td class="response-text">Exposes debates about whose beauty is celebrated, whiteness-centered branding, legacy exclusion.</td>
+                                <td class="response-text">Reflects tensions in beauty definition/marketing, diverse representation struggle, historical racialized advertising.</td>
+                                <td class="response-text">Highlights white-centric beauty vs inclusive representation, given America's "genetic superiority" discrimination history.</td>
+                                <td class="response-text">Exposes brands profiting from exclusionary ideals, mirroring historical racialized marketing.</td>
+                                <td class="response-text">Cultural conflict over beauty definition, persistent racialized advertising, "good genes" harmful legacies.</td>
+                                <td class="response-text">Tensions over white beauty standards, inclusive marketing rollback, U.S. eugenics history.</td>
+                            </tr>
+                            <tr class="hover-effect">
+                                <td class="question-cell">Q4: How might lack of diversity in decision-making or Sweeney's silence have influenced public backlash?</td>
+                                <td class="response-text">Lack of diverse voices or silence signaled indifference, fueling distrust among underrepresented audiences.</td>
+                                <td class="response-text">Absence of diversity or silence exacerbated backlash, suggesting lack of awareness for controversial interpretations.</td>
+                                <td class="response-text">Lack of diverse perspectives prevented recognizing problems, silence interpreted as indifference to harm.</td>
+                                <td class="response-text">Absence of diversity or silence suggested lack of consideration, amplifying accountability concerns.</td>
+                                <td class="response-text">Lack of diversity and non-response signaled disconnect from affected communities, intensifying carelessness perceptions.</td>
+                                <td class="response-text">Lack of diversity or silence signaled tone-deafness, intensifying insensitivity toward marginalized groups.</td>
+                            </tr>
+                            <tr class="hover-effect">
+                                <td class="question-cell">Q5: What are potential long-term implications for Sydney Sweeney's brand and American Eagle's advertising approach?</td>
+                                <td class="response-text">Could position Sweeney as tone-deaf, pressuring American Eagle to revisit creative vetting, inclusive commitment.</td>
+                                <td class="response-text">Sweeney associated with insensitive marketing. American Eagle may re-evaluate strategies prioritizing inclusivity.</td>
+                                <td class="response-text">Sweeney risks damage among conscious audiences. American Eagle faces pressure for genuine inclusivity beyond superficial diversity.</td>
+                                <td class="response-text">Credibility loss for Sweeney among concerned audiences. Catalyst for American Eagle to reevaluate advertising.</td>
+                                <td class="response-text">Could erode trust in both brands—limiting Sweeney's appeal, forcing American Eagle to reevaluate advertising.</td>
+                                <td class="response-text">Could tarnish Sweeney's brand as exclusionary. Stock surge may embolden similar edgy campaigns.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Key Conclusions</h2>
+                <div class="conclusions">
+                    <div class="conclusions-grid">
+                        <div class="conclusion-item">
+                            <h3>1. Universal Recognition of Problematic Elements</h3>
+                            <p>All AI engines recognize the campaign as problematic, with none defending it outright. This suggests a <span class="highlight">broad consensus</span> in training data about the sensitivity of eugenic-related messaging in marketing.</p>
+                        </div>
+
+                        <div class="conclusion-item">
+                            <h3>2. Varying Degrees of Directness</h3>
+                            <p>Spectrum from Claude's blunt assessment (<span class="highlight">"white supremacist beauty ideals"</span>) to ChatGPT's diplomatic framing. This reflects different approaches to handling controversial topics.</p>
+                        </div>
+
+                        <div class="conclusion-item">
+                            <h3>3. Corporate Accountability Emphasis</h3>
+                            <p>All engines specifically addressed <span class="highlight">diversity gaps in decision-making</span> as a key factor, indicating strong training on how homogeneous teams create blind spots in sensitive campaigns.</p>
+                        </div>
+
+                        <div class="conclusion-item">
+                            <h3>4. Historical Context Prioritization</h3>
+                            <p>Every model emphasized <span class="highlight">historical connections to eugenics</span> and racialized beauty standards, suggesting this context is well-represented in training data across all platforms.</p>
+                        </div>
+
+                        <div class="conclusion-item">
+                            <h3>5. Business Realism vs. Idealism Split</h3>
+                            <p>Grok uniquely acknowledged <span class="highlight">stock surge as potential encouragement</span> for similar campaigns, while others focused on pressure for reform, revealing different perspectives on corporate motivations.</p>
+                        </div>
+
+                        <div class="conclusion-item">
+                            <h3>6. Consistent Brand Risk Assessment</h3>
+                            <p>All engines predicted <span class="highlight">long-term reputational damage</span> for both Sweeney and American Eagle, with particular emphasis on erosion of trust among socially conscious audiences and diverse communities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="brandrank-about">
+                    <h3>About BrandRank</h3>
+                    <p>We help Brands measure, protect, and grow trust through the power of AI-driven search and discovery. Combining AI with expert insight, we monitor the major AI "Answer Engines" to pinpoint vulnerabilities and opportunities, identify key insights driving purchase behavior, and uncover category needs and opportunities to strengthen brand equity and consumer loyalty.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.hover-effect');
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+
+            // Add fade-in animation for conclusion items
+            const conclusions = document.querySelectorAll('.conclusion-item');
+            conclusions.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>
